@@ -1,0 +1,19 @@
+[project]
+name = "smartparsal"
+version = "0.1.0"
+description = "SmartParcel"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.2.7",
+    "pre-commit>=4.3.0",
+]
+[tool.ruff]
+line-length = 88
+extend-select = ["I"]
+exclude = [
+    "migrations",
+    "venv",
+    "env",
+    "__pycache__",
+]
