@@ -8,4 +8,4 @@ class CustomUser(AbstractUser):
 
     @property
     def name(self):
-        return self.first_name + " " + self.last_name
+        return self.get_full_name()
