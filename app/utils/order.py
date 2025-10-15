@@ -1,20 +1,22 @@
-ORDER_STATUS = [
+ACTIVE_ORDER_STATUS = [
     ("pending", "Pending"),
-    ("at_sorting", "At Sorting"),
     ("assigned", "Assigned for Delivery"),
-    ("at_delivery_hub", "At Delivery Hub"),
     ("transit", "In Transit"),
     ("hold", "on Hold"),
-    ("cancelled", "Cancelled"),
+]
+
+DELIVERY_ORDER_STATUS = [
     ("delivery", "Delivery"),
     ("partial_delivery", "Partial Delivery"),
     ("exchange", "Exchange"),
+]
+RETURN_ORDER_STATUS = [
     ("returned", "Returned"),
     ("paid_return", "Paid Return"),
+]
+REVERSE_ORDER_STATUS = [
     ("return_transit", "Return In Transit"),
-    ("return_at_sorting", "Return At Sorting"),
     ("return_assigned", "Assigned for Return"),
-    ("first_mile_hub", "First Mile Hub"),
     ("return_to_merchant", "Return To Merchant"),
 ]
 
@@ -24,6 +26,16 @@ ORDER_STAGE = [
     ("returned", "Returned"),
     ("reverse_delivery", "Reverse Delivery"),
 ]
+
+ORDER_STATUS = (
+    ACTIVE_ORDER_STATUS
+    + DELIVERY_ORDER_STATUS
+    + RETURN_ORDER_STATUS
+    + REVERSE_ORDER_STATUS
+    + [
+        ("cancelled", "Cancelled"),
+    ]
+)
 
 WEIGHT_CHOICES = [
     ("0-0.2", "0-0.2"),
@@ -46,11 +58,23 @@ WEIGHT_CHOICES = [
 ]
 
 
-def order_status(order):
-    status = ORDER_STATUS[order.status]
-    return status
+def state_status(state):
+    if state == "active":
+        return ACTIVE_ORDER_STATUS
+    elif state == "delivered":
+        return DELIVERY_ORDER_STATUS
+    elif state == "returned":
+        return RETURN_ORDER_STATUS
+    elif state == "reverse_delivery":
+        return REVERSE_ORDER_STATUS
+    else:
+        return ORDER_STATUS
 
 
-def order_stage(order):
-    stage = ORDER_STAGE[order.status]
-    return stage
+def order_stage(state):
+    ORDER_STAGE_DICT = dict(ORDER_STAGE)
+    if state == "all":
+        return ("all", "All")
+
+    value = ORDER_STAGE_DICT.get(state, "Unknown")
+    return (state, value)

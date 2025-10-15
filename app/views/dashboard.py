@@ -16,18 +16,3 @@ class DashboardView(View):
         return render(
             request=request, template_name=self.template_name, context=context
         )
-
-
-@method_decorator(login_required, name="dispatch")
-class DeliveryView(View):
-    template_name = "app/dashboard.html"
-
-    def get(self, request, status):
-        print(status)
-        context = {
-            "title": "Dashboard",
-        }
-
-        return render(
-            request=request, template_name=self.template_name, context=context
-        )

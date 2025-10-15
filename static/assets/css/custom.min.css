@@ -1,2 +1,12 @@
-
-/*# sourceMappingURL=custom.min.css.map */
+body{
+    background: #F5F8FA;
+}
+.double-lined-border {
+    height: 4px;
+    border-top: 1px dotted #8C9BA5;
+    border-bottom: 1px dotted #8C9BA5
+}
+.delivery-cost-row {
+    line-height: 32px;
+    font-size: 16px
+}

@@ -1,0 +1,258 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block content %}
+    <div class="page-content">
+        <div class="container-fluid ">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0">New Delivery</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{% url 'delivery' 'all' %}">Delivery</a></li>
+                                <li class="breadcrumb-item active">New</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between ">
+                                <h4 class="mb-sm-0">Create Store</h4>
+                                <a href="{% url 'stores' %}" type="button" class="btn btn-outline-danger">
+                                    <i class="ri-arrow-left-line align-bottom me-1"></i>
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body border-top ">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-7 col-sm-12 ">
+                                    {% if form.errors %}
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                {% for field, errors in form.errors.items %}
+                                                    {% for error in errors %}
+                                                        <li>
+                                                            {#                                                            {% if field != "__all__" %}#}
+                                                            {#                                                                {{ form[field].label }}:#}
+                                                            {#                                                            {% endif %}#}
+                                                            {{ error }}
+                                                        </li>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="row gy-4">
+                                            <div class="col-xxl-6 col-md-6 col-sm-12">
+                                                <div>
+                                                    {{ form.store.label_tag }}
+                                                    {{ form.store }}
+                                                    {% for error in form.store.errors %}
+                                                        <div class="text-danger">{{ error }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-6 col-md-6 col-sm-12">
+                                                <div>
+                                                    {{ form.order_id.label_tag }}
+                                                    {{ form.order_id }}
+                                                    {% for error in form.order_id.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {{ error }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row gy-4 mt-2">
+                                            <div class="col-xxl-8 col-lg-8 col-md-7 col-sm-12">
+                                                <div class="row gy-4">
+                                                    <h5>Recipient Details</h5>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.customer_name.label_tag }}
+                                                        {{ form.customer_name }}
+                                                        {% for error in form.customer_name.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.customer_phone.label_tag }}
+                                                        {{ form.customer_phone }}
+                                                        {% for error in form.customer_phone.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.customer_secondary_phone.label_tag }}
+                                                        {{ form.customer_secondary_phone }}
+                                                        {% for error in form.customer_secondary_phone.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.customer_address.label_tag }}
+                                                        {{ form.customer_address }}
+                                                        {% for error in form.customer_address.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.special_instructions.label_tag }}
+                                                        {{ form.special_instructions }}
+                                                        {% for error in form.special_instructions.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-4 col-lg-4 col-md-5 col-sm-12">
+                                                <div class="row gy-4">
+                                                    <h5>Delivery Details</h5>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.total_weight.label_tag }}
+                                                        {{ form.total_weight }}
+                                                        {% for error in form.total_weight.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.quantity.label_tag }}
+                                                        {{ form.quantity }}
+                                                        {% for error in form.quantity.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.amount.label_tag }}
+                                                        {{ form.amount }}
+                                                        {% for error in form.amount.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 gy-2">
+                                                    <div>
+                                                        {{ form.item_description.label_tag }}
+                                                        {{ form.item_description }}
+                                                        {% for error in form.item_description.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ error }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row gy-4 mt-2">
+                                            <div class="col-xxl-3 col-md-3 col-sm-6">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="ri-save-line align-bottom me-1"></i>
+                                                    {% if is_update %}
+                                                        Update
+                                                    {% else %}
+                                                        Save
+                                                    {% endif %}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-12 ">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Cost of Delivery
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between delivery-cost-row">
+                                                <div>Delivery Fee</div>
+                                                <div>120</div>
+                                            </div>
+                                            <div class="d-flex justify-content-between delivery-cost-row">
+                                                <div>COD Fee</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex justify-content-between delivery-cost-row">
+                                                <div>Discount</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex justify-content-between delivery-cost-row">
+                                                <div>Promo Discount</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex justify-content-between delivery-cost-row">
+                                                <div>Additional Charge</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex justify-content-between delivery-cost-row">
+                                                <div>Compensation Cost</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="flex double-lined-border"></div>
+                                            <div class="d-flex justify-content-between delivery-cost-row">
+                                                <div>Total Cost</div>
+                                                <div>120</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+
+        </div>
+        <!-- container-fluid -->
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+
+    </script>
+{% endblock %}

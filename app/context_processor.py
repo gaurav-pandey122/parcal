@@ -1,5 +1,5 @@
-from .utils.helper import has_complete_register
 from .utils.order import ORDER_STAGE
+from .utils.profile import has_complete_register
 
 
 def app_setting(request):

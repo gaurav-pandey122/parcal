@@ -140,3 +140,4 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "/dashboard"
 LOGOUT_REDIRECT_URL = "/auth/login"
 LOGIN_URL = "/auth/login/"
+MAPS_API_KEY = env("DB_NAME")
