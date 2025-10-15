@@ -12,19 +12,12 @@ class OrderSerializer(serializers.ModelSerializer):
             "consignment_id",
             "order_id",
             "order_date",
+            "status",
             "customer_name",
-            "customer_phone",
-            "customer_secondary_phone",
-            "customer_address",
-            "total_weight",
-            "quantity",
             "amount",
-            "special_instructions",
             "item_description",
-            "created_at",
-            "updated_at",
         ]
-        read_only_fields = ["id", "order_date", "created_at", "updated_at"]
+        read_only_fields = ["id", "order_date"]
 
     def validate_amount(self, value):
         if value < 0:

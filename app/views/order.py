@@ -1,5 +1,6 @@
 import json
 
+from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -9,6 +10,7 @@ from django.views import View
 from django.views.generic import CreateView
 
 from app.forms.order import OrderForm
+from app.serializers.order import OrderSerializer
 from app.models import Order
 from app.utils.order import order_stage, state_status
 
@@ -39,9 +41,7 @@ class OrderCreateView(CreateView):
 @method_decorator(login_required, name="dispatch")
 class OrderAPIView(View):
     def post(self, request):
-        print(request.POST)
         post_data = request.POST.dict()
-        print(json.dumps(post_data, indent=4))
 
         status = request.POST.get("status")
         state = request.POST.get("state")
@@ -54,8 +54,15 @@ class OrderAPIView(View):
 
         column = request.POST.get(f"columns[{order_column}][data]")
 
-        print(
-            status, state, draw, start, length, search, order_column, order_by, column
-        )
+        # print(
+        #     status, state, draw, start, length, search, order_column, order_by, column
+        # )
 
-        return JsonResponse({"status": "success"})
+        queryset = Order.objects.all() 
+        serializer = OrderSerializer(queryset, many=True)
+        data = serializer.data
+
+        return JsonResponse({
+            "data": data,
+            "status": "success"
+        })
